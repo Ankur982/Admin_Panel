@@ -1,11 +1,11 @@
 
 const initState = {
-    
+
 }
 
-export const Reducer = (state = initState, { type, payload }) => {
+export const courseReducer = (state = initState, { type, payload }) => {
     switch (type) {
-        
+
         default: return state
     }
 }

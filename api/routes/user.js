@@ -50,15 +50,19 @@ router.post("/login", async (req, res) => {
         const accessToken = jwt.sign(
             {
                 id: loginUser._id,
-                isAdmin: user.isAdmin
-                
+                isAdmin: loginUser.isAdmin
+
             }, process.env.JWT_SEC_KEY,
 
             { expiresIn: "1d" }
 
         );
 
-        res.status(200).send({ accessToken })
+        res.status(200).send({
+            accessToken: accessToken,
+            status: true,
+            message: "Login Successfull....!",
+        })
 
     } catch (err) {
 

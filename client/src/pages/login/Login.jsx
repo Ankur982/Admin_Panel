@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Flex,
   Box,
@@ -15,11 +15,23 @@ import {
 
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../../redux/user/action";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { loading, error, loggedUser } = useSelector((store) => store.user);
+
+  
+  useEffect(() => {
+    if (loggedUser.status) {
+      navigate("/");
+    }    
+  }, [loggedUser]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -29,34 +41,12 @@ export default function Login() {
     } else if (password.length < 6) {
       alert("Password should be of atleast 6 letters");
     }
-    try {
-      const res = await fetch(
-        "https://sephorabackend-production.up.railway.app/auth/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: email,
-            password: password,
-          }),
-        }
-      )
-        .then((res) => res.json())
-        .then((e) => {
-          localStorage.setItem("token", JSON.stringify(e.accessToken) || "");
-          console.log(e);
-        })
-        .catch((err) => {
-          console.error("Error:", err);
-        });
 
-      alert("Login Sucessful");
-      navigate("/");
-    } catch (error) {
-      alert("Wrong Credentials....!");
-    }
+    let payload = {
+      email: email,
+      password: password,
+    };
+    dispatch(loginUser(payload));
   };
 
   return (
@@ -110,24 +100,19 @@ export default function Login() {
                     color={"white"}
                     type="submit"
                     _hover={{
-                      bg: "pink",
+                      bg: "gray.700",
                     }}
                   >
-                    Sign in
+                    LOGIN
                   </Button>
                 </Stack>
               </Stack>
               <Center>or</Center>
-              <Center>
-                <Center>
-                  <Text>Sign in with Google</Text>
-                </Center>
-              </Center>
               <Center py={2}>
                 Don't have an account?
                 <Link to="/signup">
                   {" "}
-                  <Text as="u">SignUp</Text>
+                  <Text as="u">SIGNUP</Text>
                 </Link>{" "}
               </Center>
             </form>

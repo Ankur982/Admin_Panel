@@ -15,7 +15,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-
+import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -35,26 +35,18 @@ export default function Signup() {
       alert("Password should be of atleast 6 letters");
     }
     try {
-      const res = await fetch(
-        "https://sephorabackend-production.up.railway.app/auth/register",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            username: `${fname} ${lname}`,
-            email: email,
-            password: password,
-          }),
-        }
-      );
-      Navigate("/login");
+      const res = await axios.post("http://localhost:8080/auth/signup", {
+        name: `${fname} ${lname}`,
+        email: email,
+        password: password,
+      });
+      Navigate("/");
       alert("Account created, redirecting to Login");
     } catch (e) {
       alert("Wrong Credentials");
     }
   };
+
   return (
     <Box w={"600px"} m={"auto"} mt={"50px"}>
       <Flex align={"center"} justify={"center"} bg={"white"} width={"550px"}>
@@ -135,17 +127,17 @@ export default function Signup() {
                     bg={"black"}
                     color={"white"}
                     _hover={{
-                      bg: "black",
+                      bg: "gray.700",
                     }}
                   >
-                    Sign up
+                    SIGNUP
                   </Button>
                 </Stack>
                 <Stack pt={6}>
                   <Text align={"center"}>
                     Already have an account?
-                    <Link to="/">
-                      <Text as="u">Login</Text>
+                    <Link to="/login">
+                      <Text as="u">LOGIN</Text>
                     </Link>
                   </Text>
                 </Stack>
