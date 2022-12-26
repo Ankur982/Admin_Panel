@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getLoggedUserName, logoutUser } from "../redux/user/action";
+import { logoutUser } from "../redux/user/action";
 
 export const Navbar = () => {
   const dispatch = useDispatch();

@@ -3,7 +3,7 @@ import { ADD_COURSE, ERROR, LOADING } from "./actionType"
 const initState = {
     loading: false,
     error: false,
-    couses: [],
+    courses: [],
     addedCourse: {}
 }
 
