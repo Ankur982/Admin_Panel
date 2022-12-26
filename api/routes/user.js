@@ -4,7 +4,8 @@ const User = require("../models/User");
 
 const CryptoJS = require("crypto-js");
 
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
+const { fetchuser } = require("../middleware/verifyToken");
 
 
 //Register New User
@@ -72,6 +73,19 @@ router.post("/login", async (req, res) => {
 
 })
 
+
+router.post('/getuser', fetchuser, async(req,res) => {
+
+    try{
+      userId = req.user;
+      const user = await User.findById(userId).select("-password");
+  
+      res.send(user);
+  
+    } catch(err){
+      res.status(500).send("Internal Server Isues");
+    }
+  });
 
 
 

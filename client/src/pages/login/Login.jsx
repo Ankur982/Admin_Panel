@@ -16,7 +16,7 @@ import {
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../../redux/user/action";
+import { getLoggedUserName, loginUser } from "../../redux/user/action";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -26,12 +26,13 @@ export default function Login() {
 
   const { loading, error, loggedUser } = useSelector((store) => store.user);
 
-  
   useEffect(() => {
     if (loggedUser.status) {
+      dispatch(getLoggedUserName(loggedUser.accessToken))
       navigate("/");
-    }    
+    }
   }, [loggedUser]);
+  
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -46,11 +47,15 @@ export default function Login() {
       email: email,
       password: password,
     };
+  
     dispatch(loginUser(payload));
+    
+    // dispatch(getLoggedUserName(loggedUser.accessToken))
   };
 
   return (
     <Box width={"600px"} m={"auto"} mt={"50px"}>
+      {error ? <Heading>Something went wrong....!</Heading> : ""}
       <Flex
         align={"center"}
         justify={"center"}
@@ -103,7 +108,7 @@ export default function Login() {
                       bg: "gray.700",
                     }}
                   >
-                    LOGIN
+                    {loading ? "Logging" : "LOGIN"}
                   </Button>
                 </Stack>
               </Stack>

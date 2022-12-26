@@ -1,8 +1,21 @@
 import React from "react";
-import { Box, Image, Text } from "@chakra-ui/react";
+import { Box, Button, Image, Text } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import { getLoggedUserName, logoutUser } from "../redux/user/action";
 
 export const Navbar = () => {
+  const dispatch = useDispatch();
+  const { loggedUserName, loggedUser } = useSelector((store) => store.user);
+
+  console.log(loggedUserName);
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
+  };
+
   return (
     <Box
       bg={"gray.700"}
@@ -27,12 +40,36 @@ export const Navbar = () => {
       <Link to="/">
         <Text>Dashboard</Text>
       </Link>
-      <Link to="/login">
-        <Text>Login</Text>
-      </Link>
-      <Link to="/signup">
-        <Text>Signup</Text>
-      </Link>
+      {loggedUserName.isAdmin == true ? (
+        <Button colorScheme="teal" variant="solid">
+          <Link to="/add-course">ADD COURSE</Link>
+        </Button>
+      ) : null}
+
+      {loggedUser ? (
+        <>
+          <Button colorScheme="teal" variant="solid">
+            {loggedUserName && loggedUserName.name}
+          </Button>
+
+          <Button
+            colorScheme="teal"
+            variant="solid"
+            onClick={() => handleLogout()}
+          >
+            LOGOUT
+          </Button>
+        </>
+      ) : (
+        <>
+          <Link to="/login">
+            <Text>Login</Text>
+          </Link>
+          <Link to="/signup">
+            <Text>Signup</Text>
+          </Link>
+        </>
+      )}
     </Box>
   );
 };

@@ -2,6 +2,7 @@ const dotenv = require('dotenv');
 const express = require('express');
 const dbConnect = require("./dbConnect");
 const userRoutes = require("./routes/user")
+const courseRoutes = require("./routes/course")
 const cors = require("cors");
 
 //dotenv
@@ -23,7 +24,9 @@ app.use(express.json());
 
 //api base routes
 
-app.use("/auth", userRoutes)
+app.use("/auth", userRoutes);
+
+app.use("/course", courseRoutes);
 
 
 //listening server

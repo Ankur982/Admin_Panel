@@ -1,9 +1,10 @@
-import { ERROR, LOADING, LOGIN, LOGOUT } from "./actionType"
+import { ERROR, LOADING, LOGGED_USER_NAME, LOGIN, LOGOUT } from "./actionType"
 
 const initState = {
     loading: false,
     error: false,
-    loggedUser: ""
+    loggedUser: "",
+    loggedUserName: ""
 }
 
 export const userReducer = (state = initState, { type, payload }) => {
@@ -32,6 +33,16 @@ export const userReducer = (state = initState, { type, payload }) => {
                 loading: false,
                 error: false,
                 loggedUser: payload
+             
+            }
+        }
+
+        case LOGGED_USER_NAME: {
+            return {
+                ...state,
+                loading: false,
+                error: false,
+                loggedUserName: payload
              
             }
         }
