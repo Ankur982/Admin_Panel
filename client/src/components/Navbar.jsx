@@ -20,7 +20,7 @@ export const Navbar = () => {
       <Link to="/">
         <Text>Home</Text>
       </Link>
-      <Link to="/login">
+      <Link to="/">
         <Text>Login</Text>
       </Link>
       <Link to="/signup">
