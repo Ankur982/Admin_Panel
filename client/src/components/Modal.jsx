@@ -1,5 +1,6 @@
 import {
   Button,
+  FormLabel,
   Grid,
   Input,
   Modal,
@@ -12,21 +13,22 @@ import {
 import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
+import { getCourse, updateCourse } from "../redux/course/action";
 
 const initial = {
   title: "",
   description: "",
-  price: 0,
+  price: "",
   teacher: "",
-  duration: 0,
-  validity: 0,
+  duration: "",
+  validity: "",
   imageLink: "",
 };
 
 const ModalComponent = ({ isOpen, setIsOpen, id }) => {
   const [course, setCourse] = useState(initial);
-  const { courses } = useSelector((store) => store.course);
+
+  const { loggedUserName, loggedUser } = useSelector((store) => store.user);
 
   const dispatch = useDispatch();
 
@@ -39,10 +41,14 @@ const ModalComponent = ({ isOpen, setIsOpen, id }) => {
     setCourse((prev) => ({ ...prev, [name]: value }));
   };
 
-
-
-  const handleSubmit = (e) => {
-    
+  const handleEdit = (e) => {
+    e.preventDefault();
+    dispatch(updateCourse(loggedUser.accessToken,id,course))
+    setTimeout(()=>{
+      dispatch(getCourse(loggedUser.accessToken));
+    },100)
+    alert("Course Updated Succesfully...!")
+    setIsOpen(false);
   };
 
   return (
@@ -50,27 +56,29 @@ const ModalComponent = ({ isOpen, setIsOpen, id }) => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Edit Course Details</ModalHeader>
+          <ModalHeader textAlign={"center"}>Edit Course Details</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb="10">
             <Grid
               display="grid"
-              textAlign={"left"}
               ml="4"
               pb="4"
               borderRadius={10}
               width="80%"
+              m={"auto"}
+              textAlign={"center"}
             >
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={(e)=>handleEdit(e)} textAlign={"center"}>
+                <FormLabel>Update Title</FormLabel>
                 <Input
                   borderBottom="1px"
                   type="text"
                   value={course.title}
                   placeholder="Enter New Title...."
-                  required
                   name="title"
                   onChange={handleChange}
                 />
+                <FormLabel mt={"10px"}>Update Description</FormLabel>
                 <Input
                   mb="2"
                   mt="2"
@@ -78,29 +86,28 @@ const ModalComponent = ({ isOpen, setIsOpen, id }) => {
                   name="description"
                   value={course.description}
                   type="text"
-                  required
                   placeholder="Enter New Description"
                   onChange={handleChange}
                 />
+                <FormLabel mt={"10px"}>Update Price</FormLabel>
                 <Input
                   borderBottom="1px"
                   name="number"
                   type="text"
                   value={course.price}
                   placeholder="Enter Updated Price..."
-                  required
                   onChange={handleChange}
                 />
-
+                <FormLabel mt={"10px"}>Update Teacher</FormLabel>
                 <Input
                   borderBottom="1px"
                   type="text"
                   value={course.teacher}
                   placeholder="Enter New Teacher Name...."
-                  required
                   name="teacher"
                   onChange={handleChange}
                 />
+                <FormLabel mt={"10px"}>Update Duration</FormLabel>
                 <Input
                   mb="2"
                   mt="2"
@@ -108,20 +115,19 @@ const ModalComponent = ({ isOpen, setIsOpen, id }) => {
                   name="duration"
                   value={course.duration}
                   type="number"
-                  required
                   placeholder="Enter New Duration"
                   onChange={handleChange}
                 />
+                <FormLabel mt={"10px"}>Update Validity</FormLabel>
                 <Input
                   borderBottom="1px"
                   name="validity"
                   type="text"
                   value={course.validity}
                   placeholder="Enter Updated Validity..."
-                  required
                   onChange={handleChange}
                 />
-
+                <FormLabel mt={"10px"}>Update ImageLink</FormLabel>
                 <Input
                   mb="2"
                   mt="2"
@@ -129,7 +135,6 @@ const ModalComponent = ({ isOpen, setIsOpen, id }) => {
                   name="imageLink"
                   value={course.imageLink}
                   type="text"
-                  required
                   placeholder="Enter New imageLink"
                   onChange={handleChange}
                 />

@@ -40,14 +40,13 @@ export const Navbar = () => {
       <Link to="/">
         <Text>Dashboard</Text>
       </Link>
-      {loggedUserName.isAdmin == true ? (
-        <Button colorScheme="teal" variant="solid">
-          <Link to="/add-course">ADD COURSE</Link>
-        </Button>
-      ) : null}
-
       {loggedUser ? (
         <>
+          {loggedUserName.isAdmin ? (
+            <Button colorScheme="teal" variant="solid">
+              <Link to="/add-course">ADD COURSE</Link>
+            </Button>
+          ) : null}
           <Button colorScheme="teal" variant="solid">
             {loggedUserName && loggedUserName.name}
           </Button>

@@ -10,25 +10,39 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import ModalComponent from "../../components/Modal";
+import { deleteCourse, getCourse } from "../../redux/course/action";
 
 export const Dashboard = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [id, setID] = useState("");
-  const { courses } = useSelector((store) => store.course);
+  const { loading, error, courses } = useSelector((store) => store.course);
+  const { loggedUserName, loggedUser } = useSelector((store) => store.user);
+
   const dispatch = useDispatch();
 
-  //-----------modal----------------
   const handleClick = (item) => {
     setIsModalVisible(true);
-    setID(item.id);
+    setID(item._id);
   };
 
-  
+  const handleDeleteCourse = (id) => {
+    dispatch(deleteCourse(loggedUser.accessToken, id));
+    setTimeout(() => {
+      dispatch(getCourse(loggedUser.accessToken));
+    }, 100);
+    alert("Course Deleted Succesfully...!");
+  };
+
+  useEffect(() => {
+    dispatch(getCourse(loggedUser.accessToken));
+  }, []);
 
   return (
-    <div>
-      <Heading>All Courses Available</Heading>
-      <SimpleGrid columns={3} w="90%" margin="auto" mt="10" spacing={4}>
+    <Box m={"auto"} textAlign={"center"}>
+      <Heading mt={"30px"}>Top Courses from Our Experts</Heading>
+      {error ? <Heading color="red">Error Loading Courses...</Heading> : ""}
+      {loading ? <Heading color="teal">Loading Courses...</Heading> : ""}
+      <SimpleGrid columns={2} w="90%" margin="auto" mt="10" spacing={4}>
         {courses &&
           courses.map((el, i) => (
             <Box
@@ -36,20 +50,31 @@ export const Dashboard = () => {
               boxShadow="rgba(0, 0, 0, 0.24) 0px 3px 8px"
               p="4"
               pb="8"
-              bg="#d9d9d9"
             >
               <Image
-                borderRadius="50px"
-                w="200px"
+                w="500px"
+                borderRadius={"20px"}
                 m="auto"
                 src={el.imageLink}
                 alt={el.title}
               />
-            
-              <Heading>{el.title}</Heading>
-              <Text mb="3" mt="2">
-                {el.description}
-              </Text>
+
+              <Heading mt={"10px"}>Title: {el.title}</Heading>
+              <Heading as="h4" size="md" mb="3" mt="2">
+                Description: {el.description}
+              </Heading>
+              <Heading as="h4" size="md" mb="3" mt="2">
+                Price: {el.price} {"₹"}
+              </Heading>
+              <Heading as="h4" size="md" mb="3" mt="2">
+                Teacher: {el.teacher}
+              </Heading>
+              <Heading as="h4" size="md" mb="3" mt="2">
+                Duration: {el.duration} {"Months"}
+              </Heading>
+              <Heading as="h4" size="md" mb="3" mt="2">
+                Validity: {el.validity} {"Months"}
+              </Heading>
               <Box
                 display={"flex"}
                 gap="3"
@@ -58,34 +83,40 @@ export const Dashboard = () => {
                 justifyContent="space-around"
                 mb="4"
               >
-                <Button>{Math.floor(Math.random() * 500)} User</Button>
-              </Box>
-              <Box
-                fontSize={12}
-                display={"flex"}
-                gap="3"
-                m="auto"
-                w="80%"
-                justifyContent="space-around"
-              >
-                <Button
-                  onClick={() => handleClick(el)}
-                  bg="#26a541"
-                  color="#ffff"
-                >
-                  EDIT COURSE
-                </Button>
-                <Button
-                  bg="red"
-                  color="#ffff"
-                >
-                  DELETE COURSE
+                <Button>
+                  Current Active user : {Math.floor(Math.random() * 500)} Users
                 </Button>
               </Box>
+
+              {loggedUserName.isAdmin ? (
+                <Box
+                  fontSize={12}
+                  display={"flex"}
+                  gap="3"
+                  m="auto"
+                  w="80%"
+                  justifyContent="space-around"
+                >
+                  <Button
+                    onClick={() => handleClick(el)}
+                    bg="teal"
+                    color="#ffff"
+                  >
+                    EDIT COURSE
+                  </Button>
+                  <Button
+                    bg="red"
+                    color="#ffff"
+                    onClick={() => handleDeleteCourse(el._id)}
+                  >
+                    DELETE COURSE
+                  </Button>
+                </Box>
+              ) : null}
             </Box>
           ))}
       </SimpleGrid>
-      {id.length != 0 ? (
+      {id ? (
         <ModalComponent
           isOpen={isModalVisible}
           setIsOpen={setIsModalVisible}
@@ -98,8 +129,8 @@ export const Dashboard = () => {
             setIsOpen={setIsModalVisible}
             id={id}
           />;
-        }, 5)
+        }, 50)
       )}
-    </div>
+    </Box>
   );
 };
