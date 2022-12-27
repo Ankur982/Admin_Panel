@@ -7,7 +7,7 @@ export const createCourse = (newCourse, token) => async (dispatch) => {
   });
 
   try {
-    let { data } = await axios.post("http://localhost:8080/course/course", newCourse, {
+    let { data } = await axios.post("https://admin-panel-backend-ys08.onrender.com/course/course", newCourse, {
       headers: {
         'Content-Type': 'application/json',
         'token': token
@@ -32,7 +32,7 @@ export const getCourse = (token) => async (dispatch) => {
     type: LOADING
   });
   try {
-    const res = await axios.get("http://localhost:8080/course/course", {
+    const res = await axios.get("https://admin-panel-backend-ys08.onrender.com/course/course", {
       headers: {
         'Content-Type': 'application/json',
         'token': token
@@ -56,7 +56,7 @@ export const deleteCourse = (token, id) => async (dispatch) => {
     type: LOADING
   });
   try {
-    const res = await axios.delete(`http://localhost:8080/course/${id}`, {
+    const res = await axios.delete(`https://admin-panel-backend-ys08.onrender.com/course/${id}`, {
       headers: {
         'Content-Type': 'application/json',
         'token': token
@@ -80,7 +80,7 @@ export const updateCourse = (token, id, newData) => async (dispatch) => {
     type: LOADING
   });
   try {
-    const res = await axios.patch(`http://localhost:8080/course/${id}`, newData, {
+    const res = await axios.patch(`https://admin-panel-backend-ys08.onrender.com/course/${id}`, newData, {
       headers: {
         'Content-Type': 'application/json',
         'token': token

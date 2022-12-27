@@ -35,7 +35,7 @@ export default function Signup() {
       alert("Password should be of atleast 6 letters");
     }
     try {
-      const res = await axios.post("http://localhost:8080/auth/signup", {
+      const res = await axios.post("https://admin-panel-backend-ys08.onrender.com/auth/signup", {
         name: `${fname} ${lname}`,
         email: email,
         password: password,

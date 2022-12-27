@@ -7,7 +7,7 @@ export const loginUser = (user) => async (dispatch) => {
     });
 
     try {
-        const res = await axios.post("http://localhost:8080/auth/login", {
+        const res = await axios.post("https://admin-panel-backend-ys08.onrender.com/auth/login", {
             email: user.email,
             password: user.password,
         })
@@ -30,7 +30,7 @@ export const getLoggedUserName = (token) => async (dispatch) => {
     });
 
     try {
-        const res = fetch("http://localhost:8080/auth/getuser", {
+        const res = fetch("https://admin-panel-backend-ys08.onrender.com/auth/getuser", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
