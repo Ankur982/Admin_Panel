@@ -74,18 +74,20 @@ router.post("/login", async (req, res) => {
 })
 
 
-router.post('/getuser', fetchuser, async(req,res) => {
+//get user details
 
-    try{
-      userId = req.user;
-      const user = await User.findById(userId).select("-password");
-  
-      res.send(user);
-  
-    } catch(err){
-      res.status(500).send("Internal Server Isues");
+router.post('/getuser', fetchuser, async (req, res) => {
+
+    try {
+        userId = req.user;
+        const user = await User.findById(userId).select("-password");
+
+        res.send(user);
+
+    } catch (err) {
+        res.status(500).send("Internal Server Isues");
     }
-  });
+});
 
 
 

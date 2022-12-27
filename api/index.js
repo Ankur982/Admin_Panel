@@ -31,6 +31,6 @@ app.use("/course", courseRoutes);
 
 //listening server
 
-app.listen( process.env.PORT || 8080,() =>{ 
-    console.log(`Server Started On Port ${process.env.PORT || 8080 }` ) 
+app.listen(process.env.PORT || 8080, () => {
+    console.log(`Server Started On Port ${process.env.PORT || 8080}`)
 });

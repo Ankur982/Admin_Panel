@@ -9,10 +9,10 @@ import { userReducer } from "./user/reducer";
 const rootReducer = combineReducers({
     user: userReducer,
     course: courseReducer,
-  });
-  
+});
 
-  
+
+
 
 export const store = legacy_createStore(
     rootReducer,

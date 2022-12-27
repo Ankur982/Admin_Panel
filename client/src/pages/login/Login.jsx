@@ -28,11 +28,12 @@ export default function Login() {
 
   useEffect(() => {
     if (loggedUser.status) {
-      dispatch(getLoggedUserName(loggedUser.accessToken))
+      dispatch(getLoggedUserName(loggedUser.accessToken));
       navigate("/");
     }
   }, [loggedUser]);
-  
+
+
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -47,10 +48,8 @@ export default function Login() {
       email: email,
       password: password,
     };
-  
+
     dispatch(loginUser(payload));
-    
-    // dispatch(getLoggedUserName(loggedUser.accessToken))
   };
 
   return (
@@ -95,7 +94,6 @@ export default function Login() {
                     align={"start"}
                     justify={"space-between"}
                   >
-                    {/* <Checkbox>Remember me</Checkbox> */}
                     <Link to="#" color={"black"}>
                       Forgot password?
                     </Link>

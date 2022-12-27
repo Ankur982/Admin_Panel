@@ -8,14 +8,12 @@ import {
   Stack,
   Button,
   Heading,
-  useColorModeValue,
   Select,
   Textarea,
 } from "@chakra-ui/react";
 
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { createCourse } from "../../redux/course/action";
 
 export const AddCourse = () => {

@@ -33,7 +33,7 @@ export const userReducer = (state = initState, { type, payload }) => {
                 loading: false,
                 error: false,
                 loggedUser: payload
-             
+
             }
         }
 
@@ -43,7 +43,7 @@ export const userReducer = (state = initState, { type, payload }) => {
                 loading: false,
                 error: false,
                 loggedUserName: payload
-             
+
             }
         }
 

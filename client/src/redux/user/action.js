@@ -11,7 +11,7 @@ export const loginUser = (user) => async (dispatch) => {
             email: user.email,
             password: user.password,
         })
-        
+
         dispatch({
             type: LOGIN,
             payload: res.data
@@ -24,7 +24,7 @@ export const loginUser = (user) => async (dispatch) => {
     }
 }
 
-export const getLoggedUserName = (token) => async(dispatch) => {
+export const getLoggedUserName = (token) => async (dispatch) => {
     dispatch({
         type: LOADING
     });
@@ -37,18 +37,18 @@ export const getLoggedUserName = (token) => async(dispatch) => {
                 'token': token
             }
         })
-        .then((res) => res.json())
-        .then((res) => {
-            dispatch({
-                type: LOGGED_USER_NAME,
-                payload: res
+            .then((res) => res.json())
+            .then((res) => {
+                dispatch({
+                    type: LOGGED_USER_NAME,
+                    payload: res
+                })
             })
-        })
-        .catch((err) => {
-          console.error("Error:", err);
-        });
-        
-        
+            .catch((err) => {
+                console.error("Error:", err);
+            });
+
+
 
     } catch (error) {
         dispatch({

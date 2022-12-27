@@ -1,5 +1,7 @@
 const jwt = require("jsonwebtoken");
 
+
+//middleware to verify the user
 const verifyToken = (req, res, next) => {
   const token = req.headers.token;
   if (token) {
@@ -13,6 +15,7 @@ const verifyToken = (req, res, next) => {
   }
 };
 
+//middleware to verify the Authorization
 const verifyTokenAndAuthorization = (req, res, next) => {
   verifyToken(req, res, () => {
     if (req.user.id === req.params.id || req.params.userId || req.user.isAdmin) {
@@ -24,7 +27,7 @@ const verifyTokenAndAuthorization = (req, res, next) => {
 };
 
 
-
+//middleware to verify the admin
 const verifyTokenAndAdmin = (req, res, next) => {
   verifyToken(req, res, () => {
     if (req.user.isAdmin) {
@@ -34,6 +37,9 @@ const verifyTokenAndAdmin = (req, res, next) => {
     }
   });
 };
+
+
+//middleware to get the user details
 
 const fetchuser = (req, res, next) => {
   const token = req.headers.token;
@@ -47,7 +53,7 @@ const fetchuser = (req, res, next) => {
     console.log(data);
     req.user = data.id;
     next();
-    
+
   } catch (error) {
     res.status(401).json("You are not authenticated...!");
   }

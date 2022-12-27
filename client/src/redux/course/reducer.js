@@ -10,7 +10,7 @@ const initState = {
 export const courseReducer = (state = initState, { type, payload }) => {
     switch (type) {
 
-        case ADD_COURSE : {
+        case ADD_COURSE: {
             return {
                 ...state,
                 loading: false,
@@ -20,7 +20,7 @@ export const courseReducer = (state = initState, { type, payload }) => {
         }
 
 
-        case GET_COURSE : {
+        case GET_COURSE: {
             return {
                 ...state,
                 loading: false,

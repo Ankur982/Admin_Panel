@@ -10,7 +10,6 @@ import {
   ModalHeader,
   ModalOverlay,
 } from "@chakra-ui/react";
-import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCourse, updateCourse } from "../redux/course/action";
@@ -43,11 +42,11 @@ const ModalComponent = ({ isOpen, setIsOpen, id }) => {
 
   const handleEdit = (e) => {
     e.preventDefault();
-    dispatch(updateCourse(loggedUser.accessToken,id,course))
-    setTimeout(()=>{
+    dispatch(updateCourse(loggedUser.accessToken, id, course));
+    setTimeout(() => {
       dispatch(getCourse(loggedUser.accessToken));
-    },100)
-    alert("Course Updated Succesfully...!")
+    }, 100);
+    alert("Course Updated Succesfully...!");
     setIsOpen(false);
   };
 
@@ -68,7 +67,7 @@ const ModalComponent = ({ isOpen, setIsOpen, id }) => {
               m={"auto"}
               textAlign={"center"}
             >
-              <form onSubmit={(e)=>handleEdit(e)} textAlign={"center"}>
+              <form onSubmit={(e) => handleEdit(e)} textAlign={"center"}>
                 <FormLabel>Update Title</FormLabel>
                 <Input
                   borderBottom="1px"

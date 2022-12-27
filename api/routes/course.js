@@ -3,6 +3,9 @@ const router = require("express").Router();
 const { verifyTokenAndAdmin, verifyToken } = require("../middleware/verifyToken");
 const Course = require("../models/Course");
 
+
+//routes to create course and using middleware to verify user is admin
+
 router.post("/course", verifyTokenAndAdmin, async (req, res) => {
   try {
     const course = await Course.create(req.body);
@@ -13,6 +16,7 @@ router.post("/course", verifyTokenAndAdmin, async (req, res) => {
 });
 
 
+//routes to get course and using middleware to verify user
 
 router.get("/course", verifyToken, async (req, res) => {
   try {
@@ -26,6 +30,7 @@ router.get("/course", verifyToken, async (req, res) => {
 });
 
 
+//routes to delete course and using middleware to verify user is admin
 
 router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
   const { id } = req.params;
@@ -39,6 +44,8 @@ router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
 
 
 
+//routes to update course and using middleware to verify user is admin
+
 router.patch("/:id", verifyTokenAndAdmin, async (req, res) => {
   const { id } = req.params;
   const {
@@ -48,7 +55,7 @@ router.patch("/:id", verifyTokenAndAdmin, async (req, res) => {
     teacher,
     duration,
     validity,
-    videolink,
+    imageLink,
   } = req.body;
 
   try {
@@ -57,7 +64,7 @@ router.patch("/:id", verifyTokenAndAdmin, async (req, res) => {
         { _id: id },
         { $set: { title: title } }
       );
-      return res.send("Title updated");
+      return res.send("Title updated....!");
     }
 
     if (description) {
@@ -65,7 +72,7 @@ router.patch("/:id", verifyTokenAndAdmin, async (req, res) => {
         { _id: id },
         { $set: { description: description } }
       );
-      return res.send("Description Updated");
+      return res.send("Description Updated...!");
     }
 
     if (price) {
@@ -73,7 +80,7 @@ router.patch("/:id", verifyTokenAndAdmin, async (req, res) => {
         { _id: id },
         { $set: { price: price } }
       );
-      return res.send("Price Updated");
+      return res.send("Price Updated....!");
     }
 
     if (teacher) {
@@ -81,7 +88,7 @@ router.patch("/:id", verifyTokenAndAdmin, async (req, res) => {
         { _id: id },
         { $set: { teacher: teacher } }
       );
-      return res.send("Teacher Updated");
+      return res.send("Teacher Updated....!");
     }
 
     if (duration) {
@@ -89,7 +96,7 @@ router.patch("/:id", verifyTokenAndAdmin, async (req, res) => {
         { _id: id },
         { $set: { duration: duration } }
       );
-      return res.send("Duration Updated");
+      return res.send("Duration Updated....!");
     }
 
 
@@ -98,22 +105,23 @@ router.patch("/:id", verifyTokenAndAdmin, async (req, res) => {
         { _id: id },
         { $set: { validity: validity } }
       );
-      return res.send("Validity Updated");
+      return res.send("Validity Updated....!");
     }
 
 
-    if (videolink) {
+    if (imageLink) {
       const course = await Course.updateOne(
         { _id: id },
-        { $set: { videolink: videolink } }
+        { $set: { imageLink: imageLink } }
       );
-      return res.send("ImageLink Updated");
+      return res.send("ImageLink Updated...!");
     }
   } catch (e) {
     res.status(404).send(e);
   }
 
 });
+
 
 
 

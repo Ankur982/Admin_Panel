@@ -1,7 +1,6 @@
 import React from "react";
 import { Box, Button, Image, Text } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { logoutUser } from "../redux/user/action";
